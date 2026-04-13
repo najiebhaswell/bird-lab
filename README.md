@@ -11,30 +11,19 @@ Proyek ini memuat lima node spesifik (dengan OS Debian 12):
 4. **YK2** (Loopback: `3.3.3.3`)
 5. **YK3** (Loopback: `4.4.4.4`)
 
-```mermaid
-graph TB
-    ENO1["Host eno1 - MGMT DHCP"]
+![Topology](topology.svg)
 
-    ENO1 -.->|macvlan| JKT1
-    ENO1 -.->|macvlan| YK1
-    ENO1 -.->|macvlan| YK2
-    ENO1 -.->|macvlan| YK3
-    ENO1 -.->|macvlan| DR1
-
-    JKT1 <-->|"2401:1700:1:1::/126"| YK1
-    JKT1 <-->|"2401:1700:1:2::/126"| YK2
-    JKT1 <-->|"2401:1700:1:3::/126"| YK3
-
-    YK1 ~~~ YK2 ~~~ YK3
-
-    YK1 <-->|"2401:1700:1:7::/126"| YK2
-    YK2 <-->|"2401:1700:1:9::/126"| YK3
-    YK1 <-->|"2401:1700:1:8::/126"| YK3
-
-    YK1 <-->|"2401:1700:1:4::/126"| DR1
-    YK2 <-->|"2401:1700:1:5::/126"| DR1
-    YK3 <-->|"2401:1700:1:6::/126"| DR1
-```
+| Link | Subnet | Sisi A | Sisi B |
+|------|--------|--------|--------|
+| JKT1 ↔ YK1 | `2401:1700:1:1::/126` | `::2` (JKT1) | `::3` (YK1) |
+| JKT1 ↔ YK2 | `2401:1700:1:2::/126` | `::2` (JKT1) | `::3` (YK2) |
+| JKT1 ↔ YK3 | `2401:1700:1:3::/126` | `::2` (JKT1) | `::3` (YK3) |
+| DR1 ↔ YK1 | `2401:1700:1:4::/126` | `::2` (DR1) | `::3` (YK1) |
+| DR1 ↔ YK2 | `2401:1700:1:5::/126` | `::2` (DR1) | `::3` (YK2) |
+| DR1 ↔ YK3 | `2401:1700:1:6::/126` | `::2` (DR1) | `::3` (YK3) |
+| YK1 ↔ YK2 | `2401:1700:1:7::/126` | `::2` (YK1) | `::3` (YK2) |
+| YK1 ↔ YK3 | `2401:1700:1:8::/126` | `::2` (YK1) | `::3` (YK3) |
+| YK2 ↔ YK3 | `2401:1700:1:9::/126` | `::2` (YK2) | `::3` (YK3) |
 
 Masing-masing router diisolasi pada Container yang diatur menggunakan `privileged: true` agar BIRD memiliki akses modifikasi pada tabel routing Kernel.
 
