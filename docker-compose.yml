@@ -1,0 +1,190 @@
+version: '3.8'
+services:
+  jkt1:
+    build: .
+    container_name: jkt1
+    privileged: true
+    sysctls:
+    - net.ipv6.conf.all.disable_ipv6=0
+    - net.ipv6.conf.default.disable_ipv6=0
+    hostname: jkt1
+    environment:
+    - LOOPBACK_IP=5.5.5.5
+    volumes:
+    - ./configs/jkt1.conf:/etc/bird/bird.conf
+    networks:
+      mgmt:
+        priority: 1000
+      ptp-jkt1-yk1:
+        ipv6_address: 2401:1700:1:1::2
+        priority: 990
+      ptp-jkt1-yk2:
+        ipv6_address: 2401:1700:1:2::2
+        priority: 980
+      ptp-jkt1-yk3:
+        ipv6_address: 2401:1700:1:3::2
+        priority: 970
+  dr1:
+    build: .
+    container_name: dr1
+    privileged: true
+    sysctls:
+    - net.ipv6.conf.all.disable_ipv6=0
+    - net.ipv6.conf.default.disable_ipv6=0
+    hostname: dr1
+    environment:
+    - LOOPBACK_IP=1.1.1.1
+    volumes:
+    - ./configs/dr1.conf:/etc/bird/bird.conf
+    networks:
+      mgmt:
+        priority: 980
+      ptp-dr1-yk1:
+        ipv6_address: 2401:1700:1:4::2
+        priority: 970
+      ptp-dr1-yk2:
+        ipv6_address: 2401:1700:1:5::2
+        priority: 1000
+      ptp-dr1-yk3:
+        ipv6_address: 2401:1700:1:6::2
+        priority: 990
+  yk1:
+    build: .
+    container_name: yk1
+    privileged: true
+    sysctls:
+    - net.ipv6.conf.all.disable_ipv6=0
+    - net.ipv6.conf.default.disable_ipv6=0
+    hostname: yk1
+    environment:
+    - LOOPBACK_IP=2.2.2.2
+    volumes:
+    - ./configs/yk1.conf:/etc/bird/bird.conf
+    networks:
+      mgmt:
+        priority: 990
+      ptp-jkt1-yk1:
+        ipv6_address: 2401:1700:1:1::3
+        priority: 970
+      ptp-dr1-yk1:
+        ipv6_address: 2401:1700:1:4::3
+        priority: 980
+      ptp-yk1-yk2:
+        ipv6_address: 2401:1700:1:7::2
+        priority: 960
+      ptp-yk1-yk3:
+        ipv6_address: 2401:1700:1:8::2
+        priority: 1000
+  yk2:
+    build: .
+    container_name: yk2
+    privileged: true
+    sysctls:
+    - net.ipv6.conf.all.disable_ipv6=0
+    - net.ipv6.conf.default.disable_ipv6=0
+    hostname: yk2
+    environment:
+    - LOOPBACK_IP=3.3.3.3
+    volumes:
+    - ./configs/yk2.conf:/etc/bird/bird.conf
+    networks:
+      mgmt:
+        priority: 990
+      ptp-jkt1-yk2:
+        ipv6_address: 2401:1700:1:2::3
+        priority: 970
+      ptp-dr1-yk2:
+        ipv6_address: 2401:1700:1:5::3
+        priority: 980
+      ptp-yk1-yk2:
+        ipv6_address: 2401:1700:1:7::3
+        priority: 960
+      ptp-yk2-yk3:
+        ipv6_address: 2401:1700:1:9::2
+        priority: 1000
+  yk3:
+    build: .
+    container_name: yk3
+    privileged: true
+    sysctls:
+    - net.ipv6.conf.all.disable_ipv6=0
+    - net.ipv6.conf.default.disable_ipv6=0
+    hostname: yk3
+    environment:
+    - LOOPBACK_IP=4.4.4.4
+    volumes:
+    - ./configs/yk3.conf:/etc/bird/bird.conf
+    networks:
+      mgmt:
+        priority: 980
+      ptp-jkt1-yk3:
+        ipv6_address: 2401:1700:1:3::3
+        priority: 960
+      ptp-dr1-yk3:
+        ipv6_address: 2401:1700:1:6::3
+        priority: 970
+      ptp-yk1-yk3:
+        ipv6_address: 2401:1700:1:8::3
+        priority: 1000
+      ptp-yk2-yk3:
+        ipv6_address: 2401:1700:1:9::3
+        priority: 990
+networks:
+  mgmt:
+    driver: macvlan
+    driver_opts:
+      parent: eno1
+  ptp-jkt1-yk1:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 2401:1700:1:1::/126
+  ptp-jkt1-yk2:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 2401:1700:1:2::/126
+  ptp-jkt1-yk3:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 2401:1700:1:3::/126
+  ptp-dr1-yk1:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 2401:1700:1:4::/126
+  ptp-dr1-yk2:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 2401:1700:1:5::/126
+  ptp-dr1-yk3:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 2401:1700:1:6::/126
+  ptp-yk1-yk2:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 2401:1700:1:7::/126
+  ptp-yk1-yk3:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 2401:1700:1:8::/126
+  ptp-yk2-yk3:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 2401:1700:1:9::/126
