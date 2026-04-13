@@ -13,11 +13,11 @@ Proyek ini memuat lima node spesifik (dengan OS Debian 12):
 
 ```mermaid
 graph TD
-    classDef manage fill:#f9f9f9,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5;
-    classDef router fill:#d4e6f1,stroke:#2980b9,stroke-width:2px;
+    classDef manage fill:#f9f9f9,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
+    classDef router fill:#d4e6f1,stroke:#2980b9,stroke-width:2px
 
-    ENO1[Host eno1<br>Management DHCP] :::manage
-    
+    ENO1["Host eno1 - Management DHCP"] :::manage
+
     JKT1((JKT1)) :::router
     DR1((DR1)) :::router
     YK1((YK1)) :::router
@@ -30,17 +30,17 @@ graph TD
     ENO1 -.->|macvlan| YK2
     ENO1 -.->|macvlan| YK3
 
-    JKT1 <-.->|2401:1700:1:1::/126| YK1
-    JKT1 <-.->|2401:1700:1:2::/126| YK2
-    JKT1 <-.->|2401:1700:1:3::/126| YK3
+    JKT1 <-->|"2401:1700:1:1::/126"| YK1
+    JKT1 <-->|"2401:1700:1:2::/126"| YK2
+    JKT1 <-->|"2401:1700:1:3::/126"| YK3
 
-    DR1 <-.->|2401:1700:1:4::/126| YK1
-    DR1 <-.->|2401:1700:1:5::/126| YK2
-    DR1 <-.->|2401:1700:1:6::/126| YK3
+    DR1 <-->|"2401:1700:1:4::/126"| YK1
+    DR1 <-->|"2401:1700:1:5::/126"| YK2
+    DR1 <-->|"2401:1700:1:6::/126"| YK3
 
-    YK1 <==>|2401:1700:1:7::/126| YK2
-    YK1 <==>|2401:1700:1:8::/126| YK3
-    YK2 <==>|2401:1700:1:9::/126| YK3
+    YK1 <-->|"2401:1700:1:7::/126"| YK2
+    YK1 <-->|"2401:1700:1:8::/126"| YK3
+    YK2 <-->|"2401:1700:1:9::/126"| YK3
 ```
 
 Masing-masing router diisolasi pada Container yang diatur menggunakan `privileged: true` agar BIRD memiliki akses modifikasi pada tabel routing Kernel.
