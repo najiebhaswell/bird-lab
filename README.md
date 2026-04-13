@@ -13,16 +13,7 @@ Proyek ini memuat lima node spesifik (dengan OS Debian 12):
 
 ```mermaid
 graph TD
-    classDef manage fill:#f9f9f9,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
-    classDef router fill:#d4e6f1,stroke:#2980b9,stroke-width:2px
-
-    ENO1["Host eno1 - Management DHCP"] :::manage
-
-    JKT1((JKT1)) :::router
-    DR1((DR1)) :::router
-    YK1((YK1)) :::router
-    YK2((YK2)) :::router
-    YK3((YK3)) :::router
+    ENO1["Host eno1 - Management DHCP"]
 
     ENO1 -.->|macvlan| JKT1
     ENO1 -.->|macvlan| DR1
