@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     tshark \
     nano \
     mtr-tiny \
+    traceroute \
     openssh-server \
     && rm -rf /var/lib/apt/lists/*
 

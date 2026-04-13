@@ -3,13 +3,14 @@
 Lab lingkungan routing inter-koneksi PTP berbasis **BIRD 3.2.1** menggunakan Docker container. 
 Project ini mereplikasi *behavior* perangkat keras / router sesungguhnya dengan menyajikan jaringan IPv6-ready untuk topologi Full-Mesh BGP/OSPF.
 
-## Topologi (5 Nodes)
-Proyek ini memuat lima node spesifik (dengan OS Debian 12):
+## Topologi (6 Nodes)
+Proyek ini memuat enam node spesifik (dengan OS Debian 12):
 1. **JKT1** (Loopback: `5.5.5.5`)
 2. **DR1** (Loopback: `1.1.1.1`)
 3. **YK1** (Loopback: `2.2.2.2`)
 4. **YK2** (Loopback: `3.3.3.3`)
 5. **YK3** (Loopback: `4.4.4.4`)
+6. **JKT2** (Loopback: `6.6.6.6`)
 
 ![Topology](topology.svg)
 
@@ -24,6 +25,7 @@ Proyek ini memuat lima node spesifik (dengan OS Debian 12):
 | YK1 ↔ YK2 | `2401:1700:1:7::/126` | `::2` (YK1) | `::3` (YK2) |
 | YK1 ↔ YK3 | `2401:1700:1:8::/126` | `::2` (YK1) | `::3` (YK3) |
 | YK2 ↔ YK3 | `2401:1700:1:9::/126` | `::2` (YK2) | `::3` (YK3) |
+| JKT1 ↔ JKT2| `2401:1700:1:a::/126` | `::2` (JKT1) | `::3` (JKT2)|
 
 Masing-masing router diisolasi pada Container yang diatur menggunakan `privileged: true` agar BIRD memiliki akses modifikasi pada tabel routing Kernel.
 
@@ -48,6 +50,7 @@ Berbeda dari Lab biasa yang menggunakan bridge IPv4, Docker telah disesuaikan mu
 * `ptp-yk1-yk2`: `2401:1700:1:7::/126` -> (yk1: `::2`, yk2: `::3`)
 * `ptp-yk1-yk3`: `2401:1700:1:8::/126` -> (yk1: `::2`, yk3: `::3`)
 * `ptp-yk2-yk3`: `2401:1700:1:9::/126` -> (yk2: `::2`, yk3: `::3`)
+* `ptp-jkt1-jkt2`: `2401:1700:1:a::/126` -> (jkt1: `::2`, jkt2: `::3`)
 
 > **[Penting] Interface Index Priority:** Modifikasi `priority:` disuntikkan ke dalam `docker-compose.yml` agar Docker *selalu* menggunakan index interface hardware yang sama (seperti `eth0`, `eth4`) sesuai dengan ekspektasi string hardcode `interface "ethX"` yang tersimpan di dalam masing-masing file konfigurasi BIRD lokal secara persisten.
 
@@ -58,6 +61,7 @@ Setiap Node mendapatkan IP identitas uniknya untuk *Router ID / BGP Updates* yan
 * `yk2` : 3.3.3.3/32
 * `yk3` : 4.4.4.4/32
 * `jkt1`: 5.5.5.5/32
+* `jkt2`: 6.6.6.6/32
 
 ---
 

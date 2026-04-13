@@ -12,7 +12,12 @@
   <line x1="650" y1="70" x2="400" y2="280" stroke="#999" stroke-width="1" stroke-dasharray="5,3"/>
   <line x1="700" y1="70" x2="650" y2="280" stroke="#999" stroke-width="1" stroke-dasharray="5,3"/>
   <line x1="675" y1="70" x2="400" y2="470" stroke="#999" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="580" y1="45" x2="150" y2="100" stroke="#999" stroke-width="1" stroke-dasharray="5,3"/>
   <text x="500" y="78" font-size="9" fill="#999">macvlan</text>
+
+  <!-- JKT2 -->
+  <rect x="90" y="100" width="120" height="40" rx="6" fill="#d4e6f1" stroke="#2980b9" stroke-width="2"/>
+  <text x="150" y="125" text-anchor="middle" font-weight="bold" fill="#2c3e50">JKT2</text>
 
   <!-- JKT1 -->
   <rect x="340" y="100" width="120" height="40" rx="6" fill="#d4e6f1" stroke="#2980b9" stroke-width="2"/>
@@ -35,6 +40,9 @@
   <text x="400" y="480" text-anchor="middle" font-weight="bold" fill="#2c3e50">DR1</text>
 
   <!-- PTP Links: JKT1 to YK1/YK2/YK3 -->
+  <line x1="210" y1="120" x2="340" y2="120" stroke="#2980b9" stroke-width="2"/>
+  <text x="275" y="113" font-size="9" fill="#2980b9" text-anchor="middle">2401:1700:1:a::/126</text>
+
   <line x1="360" y1="140" x2="170" y2="265" stroke="#2980b9" stroke-width="2"/>
   <text x="240" y="195" font-size="9" fill="#2980b9" transform="rotate(-30,240,195)">2401:1700:1:1::/126</text>
 

@@ -24,6 +24,9 @@ services:
       ptp-jkt1-yk3:
         ipv6_address: 2401:1700:1:3::2
         priority: 970
+      ptp-jkt1-jkt2:
+        ipv6_address: 2401:1700:1:a::2
+        priority: 960
   dr1:
     build: .
     container_name: dr1
@@ -38,16 +41,16 @@ services:
     - ./configs/dr1.conf:/etc/bird/bird.conf
     networks:
       mgmt:
-        priority: 980
+        priority: 1000
       ptp-dr1-yk1:
         ipv6_address: 2401:1700:1:4::2
-        priority: 970
+        priority: 990
       ptp-dr1-yk2:
         ipv6_address: 2401:1700:1:5::2
-        priority: 1000
+        priority: 980
       ptp-dr1-yk3:
         ipv6_address: 2401:1700:1:6::2
-        priority: 990
+        priority: 970
   yk1:
     build: .
     container_name: yk1
@@ -89,19 +92,19 @@ services:
     - ./configs/yk2.conf:/etc/bird/bird.conf
     networks:
       mgmt:
-        priority: 990
+        priority: 1000
       ptp-jkt1-yk2:
         ipv6_address: 2401:1700:1:2::3
-        priority: 970
+        priority: 980
       ptp-dr1-yk2:
         ipv6_address: 2401:1700:1:5::3
-        priority: 980
+        priority: 990
       ptp-yk1-yk2:
         ipv6_address: 2401:1700:1:7::3
-        priority: 960
+        priority: 970
       ptp-yk2-yk3:
         ipv6_address: 2401:1700:1:9::2
-        priority: 1000
+        priority: 960
   yk3:
     build: .
     container_name: yk3
@@ -128,6 +131,24 @@ services:
         priority: 1000
       ptp-yk2-yk3:
         ipv6_address: 2401:1700:1:9::3
+        priority: 990
+  jkt2:
+    build: .
+    container_name: jkt2
+    privileged: true
+    sysctls:
+    - net.ipv6.conf.all.disable_ipv6=0
+    - net.ipv6.conf.default.disable_ipv6=0
+    hostname: jkt2
+    environment:
+    - LOOPBACK_IP=6.6.6.6
+    volumes:
+    - ./configs/jkt2.conf:/etc/bird/bird.conf
+    networks:
+      mgmt:
+        priority: 1000
+      ptp-jkt1-jkt2:
+        ipv6_address: 2401:1700:1:a::3
         priority: 990
 networks:
   mgmt:
@@ -188,3 +209,9 @@ networks:
     ipam:
       config:
       - subnet: 2401:1700:1:9::/126
+  ptp-jkt1-jkt2:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      config:
+      - subnet: 2401:1700:1:a::/126
