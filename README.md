@@ -12,7 +12,7 @@ Proyek ini memuat enam node spesifik (dengan OS Debian 12):
 5. **YK3** (Loopback: `4.4.4.4`)
 6. **JKT2** (Loopback: `6.6.6.6`)
 
-![Topology](topology.svg)
+![Topology](topology.svg?v=2)
 
 | Link | Subnet | Sisi A | Sisi B |
 |------|--------|--------|--------|
