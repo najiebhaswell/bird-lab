@@ -98,3 +98,7 @@ Tool diagnostik yang telah tertanam di dalam Container: `ping`, `mtr`, `tshark`,
 # Menyerah/restart Lab:
 sudo docker compose down && sudo docker compose up -d
 ```
+
+## Referensi
+
+- [Massars Network Design](https://massars.net/design/)
